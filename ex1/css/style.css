@@ -1,0 +1,56 @@
+.container {
+  /*   background-color: cyan; */
+  /*   width: 1000px; */
+  margin: 30px auto;
+
+  display: grid;
+  grid-template-rows: 100px auto-fit auto-fit 100px;
+  grid-template-columns: 1fr 4fr;
+}
+.item {
+  flex-grow: 1;
+  padding: 20px;
+  font-size: 30px;
+  font-family: sans-serif;
+  color: red;
+}
+.logo {
+  background-color: blueviolet;
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+.title {
+  background-color: gold;
+}
+.footer {
+  background-color: green;
+  grid-row: 4 / 5;
+  grid-column: 1 / -1;
+}
+.leftSide {
+  background-color: brown;
+  grid-row: 2 / 4;
+  grid-column: 1 / 2;
+}
+.narbar {
+  background-color: pink;
+  grid-row: 2 / 3;
+  grid-column: 2 / 4;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+  grid-auto-rows: auto-fit;
+}
+.n-item {
+  /*   padding-right: 30px; */
+  /*   background-color: yellow; */
+  /*   flex-grow: 1; */
+}
+.content {
+  background-color: greenyellow;
+  grid-row: 3 / 4;
+  grid-column: 2 / 4;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: auto-fit;
+}
