@@ -1,0 +1,16 @@
+.container {
+  /*   background-color: cyan; */
+  /*   width: 1000px; */
+  margin: 30px auto;
+
+  display: grid;
+  grid-template-rows: 100px auto-fit auto-fit 100px;
+  grid-template-columns: 1fr 4fr;
+}
+.item {
+  flex-grow: 1;
+  padding: 20px;
+  font-size: 30px;
+  font-family: sans-serif;
+  color: red;
+}
