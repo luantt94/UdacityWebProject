@@ -90,6 +90,12 @@ section {
   transition: ease 0.3s all;
 }
 
+.nav-item.active {
+    / *Add your active styling here* /
+    font-weight: bold;
+    color: blue;
+  }
+
 /* Header Styles */
 .page__header {
   background: #fff;
@@ -232,4 +238,34 @@ section.active .landing__container::after {
   to {
     transform: rotate(360deg) translate(-1em) rotate(-360deg);
   }
+}
+
+.collapsible {
+  cursor: pointer;
+}
+
+.content {
+  display: none;
+}
+
+#scrollToTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background-color: #555;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+#scrollToTopBtn:hover {
+  opacity: 1;
 }
