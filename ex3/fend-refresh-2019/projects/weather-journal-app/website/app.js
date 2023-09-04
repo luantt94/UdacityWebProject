@@ -51,7 +51,7 @@ async function updateUI() {
     const data = await response.json();
     // Select the necessary elements on the DOM and update their values
     $("#date").text(`date: ${data.date}`);
-    $("#temp").text(`Temperature: ${data.temp}`);
+    $("#temp").text(`Temperature: ${Math.round(data.temp)} degrees`);
     $("#content").text(`Feels: ${data.feelings}`);
     // alert(s);
   } catch (error) {
