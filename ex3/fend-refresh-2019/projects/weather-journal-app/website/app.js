@@ -1,9 +1,10 @@
 /* Global Variables */
 const apiKey = "a120480d1813e997c3f29da55422805e";
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
+const unitConversion = "&units=imperial";
 
 async function getWeatherData(zipCode) {
-  const url = `${baseUrl}?zip=${zipCode}&appid=${apiKey}`;
+  const url = `${baseUrl}?zip=${zipCode}&appid=${apiKey}${unitConversion}`;
 
   try {
     const response = await fetch(url);
@@ -19,7 +20,7 @@ $("#generate").click(function () {
   feelings = $("#feelings").val();
   // Create a new date instance dynamically with JS
   let d = new Date();
-  let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
+  let newDate = d.getMonth() + 1 + "." + d.getDate() + "." + d.getFullYear();
   getWeatherData(zipCode).then(function (data) {
     // alert(data.main.temp);
     const temp = data.main.temp;
