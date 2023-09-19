@@ -1,43 +1,99 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Test</title>
-        <link rel="stylesheet" href="/styles/resets.css">
-        <link rel="stylesheet" href="/styles/base.css">
-        <link rel="stylesheet" href="/styles/header.css">
-        <link rel="stylesheet" href="/styles/form.css">
-        <link rel="stylesheet" href="/styles/footer.css">
-    </head>
+  <head>
+    <meta charset="utf-8" />
+    <title>Test</title>
+    <link rel="stylesheet" href="/styles/resets.scss" />
+    <link rel="stylesheet" href="/styles/base.scss" />
+    <link rel="stylesheet" href="/styles/header.scss" />
+    <link rel="stylesheet" href="/styles/form.scss" />
+    <link rel="stylesheet" href="./styles/footer.scss" />
+  </head>
+  <script>
+    function handleSubmit2(event) {
+      event.preventDefault();
 
-    <body>
+      // check what text was put into the form field
+      let formText = document.getElementById("name").value;
+      //   checkForName(formText);
 
-        <header>
-            <div class="">
-                Logo
-            </div>
-            <div class="">
-                navigation
-            </div>
-        </header>
+      console.log("::: Form Submitted :::");
+      fetch("http://localhost:8080/test", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: formText }),
+      })
+        .then((res) => res.json())
+        .then(function (res) {
+          //Clean old results
+          document.getElementById("results").innerHTML = "";
+          let agreement = document.createElement("h3");
+          agreement.innerText = "agreement: " + res.agreement;
+          document.getElementById("results").appendChild(agreement);
+          let confidence = document.createElement("h3");
+          confidence.innerText = "confidence: " + res.confidence;
+          document.getElementById("results").appendChild(confidence);
 
-        <main>
-            <section>
-                <form class="" onsubmit="return handleSubmit(event)">
-                    <input id="name" type="text" name="input" value="" onblur="onBlur()" placeholder="Name">
-                    <input type="submit" name="" value="submit" onclick="return handleSubmit(event)" onsubmit="return handleSubmit(event)">
-                </form>
-            </section>
+          let detail = document.createElement("h3");
+          detail.innerText = "DETAILS:";
+          document.getElementById("results").appendChild(detail);
 
-            <section>
-                <strong>Form Results:</strong>
-                <div id="results"></div>
-            </section>
-        </main>
+          for (let i = 0; i < res.sentence_list.length; i++) {
+            const sentence = document.createElement("h4");
+            sentence.innerText = "sentence: " + res.sentence_list[i].text;
+            document.getElementById("results").appendChild(sentence);
 
-        <footer>
-            <p>This is a footer</p>
-        </footer>
+            agreement = document.createElement("LI");
+            agreement.innerText =
+              "agreement: " + res.sentence_list[i].agreement;
+            document.getElementById("results").appendChild(agreement);
 
-    </body>
+            confidence = document.createElement("LI");
+            confidence.innerText =
+              "confidence: " + res.sentence_list[i].confidence;
+            document.getElementById("results").appendChild(confidence);
+          }
+        });
+    }
+  </script>
+
+  <body>
+    <header>
+      <div class="">Logo</div>
+      <div class="">navigation</div>
+    </header>
+
+    <main>
+      <section>
+        <form class="" onsubmit="return handleSubmit2(event)">
+          <input
+            id="name"
+            type="text"
+            name="input"
+            value=""
+            onblur="onBlur()"
+            placeholder="Name"
+          />
+          <input
+            type="submit"
+            name=""
+            value="submit"
+            onclick="return handleSubmit2(event)"
+            onsubmit="return handleSubmit2(event)"
+          />
+        </form>
+      </section>
+
+      <section>
+        <strong>Form Results:</strong>
+        <div id="results"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>This is a footer</p>
+    </footer>
+  </body>
 </html>
