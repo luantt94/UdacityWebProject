@@ -1,9 +1,13 @@
+import { checkForName } from "./nameChecker";
+
 function handleSubmit(event) {
   event.preventDefault();
-
-  // check what text was put into the form field
   let formText = document.getElementById("name").value;
-  //   checkForName(formText);
+
+  if (!validateInput(formText)) {
+    alert("Text should not be empty or url");
+    return;
+  }
 
   console.log("::: Form Submitted :::");
   fetch("http://localhost:8081/test", {
@@ -41,8 +45,12 @@ function handleSubmit(event) {
         confidence.innerText = "confidence: " + res.sentence_list[i].confidence;
         document.getElementById("results").appendChild(confidence);
       }
-      console.log("CHANGE!!");
     });
 }
 
-export { handleSubmit };
+function validateInput(formText) {
+  // check what text was put into the form field
+  return checkForName(formText);
+}
+
+export { handleSubmit, validateInput };
