@@ -29,31 +29,61 @@ app.listen(8081, function () {
   console.log("*********************");
 });
 
-const apiKey = process.env.API_KEY;
-console.log(apiKey);
+const user = process.env.USER;
+const w_api_key = process.env.WEATHERBIT_API_KEY;
+const p_api_key = process.env.PIXABAY_API_KEY;
 
 // I absolutely loved the movie! The plot was captivating, the acting was superb, and the cinematography was stunning. I highly recommend it to everyone!
 // I'm really disappointed with the customer service I received. The product arrived late, and when I contacted support, they were unhelpful and rude. I would not recommend this company to anyone.
 app.post("/test", function (req, res) {
-  const text = req.body.text;
-  const apiUrl = `https://api.meaningcloud.com/sentiment-2.1?key=${apiKey}&lang=en&txt=${encodeURIComponent(
-    text
-  )}`;
-  console.log(apiUrl);
+  const location = req.body.location;
+  const remainDay = req.body.remainDay;
+
+  const locationUrl = `https://secure.geonames.org/searchJSON?q=${location}&maxRows=1&username=${user}`;
+
   axios
-    .get(apiUrl)
+    .get(locationUrl)
     .then((response) => response.data)
     .then((data) => {
       // console.log(data);
-      // let jsonData = {
-      //   message: "haha",
-      //   status_msg: data.status.msg,
-      //   agreement: data.agreement,
-      //   confidence: data.confidence,
-      // };
-      // You can access the sentiment analysis results here
-      // res.send(jsonData);
-      res.send(data);
+      let { lat, lng } = data.geonames[0];
+      const weatherUrl = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&units=M&days=${remainDay}&key=${w_api_key}`;
+      // console.log(weatherUrl);
+
+      axios
+        .get(weatherUrl)
+        .then((response) => response.data)
+        .then((data) => {
+          // console.log(data);
+          lastDate = remainDay - 1;
+          const { weather, temp, app_max_temp, app_min_temp, datetime } =
+            data.data[lastDate];
+          const { description } = weather;
+
+          const pixabayUrl = `https://pixabay.com/api/?key=${p_api_key}&q=${location}&image_type=photo`;
+          axios
+            .get(pixabayUrl)
+            .then((response) => response.data)
+            .then((data) => {
+              const img = data.hits[0].webformatURL;
+              const weatherData = {
+                description,
+                temp,
+                app_max_temp,
+                app_min_temp,
+                datetime,
+                img,
+              };
+              console.log(weatherData);
+              res.send(weatherData);
+            })
+            .catch((error) => {
+              console.log("Error:", error);
+            });
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
     })
     .catch((error) => {
       console.log("Error:", error);

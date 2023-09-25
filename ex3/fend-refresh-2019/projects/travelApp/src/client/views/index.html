@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/styles/header.scss" />
     <link rel="stylesheet" href="/styles/form.scss" />
     <link rel="stylesheet" href="./styles/footer.scss" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   </head>
 
   <body>
@@ -20,13 +21,15 @@
       <section>
         <form class="" onsubmit="return Client.handleSubmit(event)">
           <input
-            id="name"
+            id="location"
             type="text"
             name="input"
             value=""
             onblur="onBlur()"
-            placeholder="Comments"
+            placeholder="Locations"
           />
+          <label for="Departing">Departing:</label>
+          <input type="date" id="departing" name="Departing" />
           <input
             type="submit"
             name=""
@@ -48,6 +51,16 @@
     </footer>
 
     <script>
+      let today = new Date().toISOString().split("T")[0];
+      $("#departing").attr({ min: today });
+
+      var max_date = new Date();
+
+      // add a day
+      max_date.setDate(max_date.getDate() + 16);
+      max_date = max_date.toISOString().split("T")[0];
+      $("#departing").attr({ max: max_date });
+
       // Check that service workers are supported
       if ("serviceWorker" in navigator) {
         // Use the window load event to keep the page load performant

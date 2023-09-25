@@ -2,10 +2,17 @@ import { checkForName } from "./nameChecker";
 
 function handleSubmit(event) {
   event.preventDefault();
-  let formText = document.getElementById("name").value;
+  let location = document.getElementById("location").value;
+  let date_depart = document.getElementById("departing").value;
+  let current_date = new Date();
+  let remainDay =
+    Math.ceil(
+      (new Date(date_depart).getTime() - current_date.getTime()) /
+        (1000 * 3600 * 24)
+    ) + 1;
 
-  if (!validateInput(formText)) {
-    alert("Text should not be empty or url");
+  if (!validateInput(location)) {
+    alert("Location should not be empty or url");
     return;
   }
 
@@ -15,7 +22,7 @@ function handleSubmit(event) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ text: formText }),
+    body: JSON.stringify({ location, remainDay }),
   })
     .then((res) => res.json())
     .then(function (res) {
