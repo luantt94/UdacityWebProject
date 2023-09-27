@@ -1,0 +1,7 @@
+.leftSide {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(135, 233, 127);
+  grid-row: 2 / 4;
+  grid-column: 1 / 2;
+}

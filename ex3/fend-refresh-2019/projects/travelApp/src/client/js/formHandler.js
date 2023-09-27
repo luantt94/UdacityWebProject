@@ -26,32 +26,38 @@ function handleSubmit(event) {
   })
     .then((res) => res.json())
     .then(function (res) {
-      //Clean old results
+      localStorage.setItem("currentTrip", JSON.stringify(res));
       document.getElementById("results").innerHTML = "";
-      let agreement = document.createElement("h3");
-      agreement.innerText = "agreement: " + res.agreement;
-      document.getElementById("results").appendChild(agreement);
-      let confidence = document.createElement("h3");
-      confidence.innerText = "confidence: " + res.confidence;
-      document.getElementById("results").appendChild(confidence);
 
-      let detail = document.createElement("h3");
-      detail.innerText = "DETAILS:";
-      document.getElementById("results").appendChild(detail);
+      let myTripTo = document.createElement("h1");
+      myTripTo.innerText = "My trip to: " + res.location;
 
-      for (let i = 0; i < res.sentence_list.length; i++) {
-        const sentence = document.createElement("h4");
-        sentence.innerText = "sentence: " + res.sentence_list[i].text;
-        document.getElementById("results").appendChild(sentence);
+      let min_max_temp = document.createElement("h4");
+      min_max_temp.innerText =
+        "Hight - " + res.app_max_temp + ", Low - " + res.app_min_temp;
 
-        agreement = document.createElement("LI");
-        agreement.innerText = "agreement: " + res.sentence_list[i].agreement;
-        document.getElementById("results").appendChild(agreement);
+      let text = document.createElement("h1");
+      text.innerText = "Typical weather for then is: ";
 
-        confidence = document.createElement("LI");
-        confidence.innerText = "confidence: " + res.sentence_list[i].confidence;
-        document.getElementById("results").appendChild(confidence);
-      }
+      let datetime = document.createElement("h4");
+      datetime.innerText = "Departing: " + res.datetime;
+
+      let img = document.createElement("img");
+      img.src = res.img;
+      // img.alt = res.description;
+
+      let description = document.createElement("h4");
+      description.innerText =
+        "Mostly " + res.description + " throughout the day.";
+
+      document.getElementById("results").appendChild(myTripTo);
+      document.getElementById("results").appendChild(datetime);
+      document.getElementById("results").appendChild(text);
+      document.getElementById("results").appendChild(min_max_temp);
+      document.getElementById("results").appendChild(description);
+
+      document.getElementById("results").appendChild(img);
+      $("#saveTrip").prop("disabled", false);
     });
 }
 
@@ -60,4 +66,66 @@ function validateInput(formText) {
   return checkForName(formText);
 }
 
-export { handleSubmit, validateInput };
+$("#deleteAllTrips").click(function () {
+  localStorage.setItem("myTrips", null);
+  updateListTrips();
+});
+
+$("#saveTrip").click(function () {
+  let res = JSON.parse(localStorage.getItem("currentTrip"));
+  let myTrips = JSON.parse(localStorage.getItem("myTrips"));
+
+  if (myTrips == null) {
+    myTrips = { trips: [] };
+  }
+  myTrips.trips.push(res);
+  localStorage.setItem("myTrips", JSON.stringify(myTrips));
+
+  updateListTrips();
+  localStorage.setItem("currentTrip", null);
+  document.getElementById("results").innerHTML = "";
+  $("#saveTrip").prop("disabled", true);
+});
+
+function updateListTrips() {
+  $("#listTrips").html("");
+  let myTrips = JSON.parse(localStorage.getItem("myTrips"));
+
+  if (myTrips != null) {
+    myTrips.trips.forEach(function (item) {
+      let div = document.createElement("div");
+
+      let myTripTo = document.createElement("h2");
+      myTripTo.innerText = "My trip to: " + item.location;
+
+      let min_max_temp = document.createElement("h5");
+      min_max_temp.innerText =
+        "Hight - " + item.app_max_temp + ", Low - " + item.app_min_temp;
+
+      let text = document.createElement("h2");
+      text.innerText = "Typical weather for then is: ";
+
+      let datetime = document.createElement("h5");
+      datetime.innerText = "Departing: " + item.datetime;
+
+      let img = document.createElement("img");
+      img.src = item.img;
+      // img.alt = item.description;
+
+      let description = document.createElement("h5");
+      description.innerText =
+        "Mostly " + item.description + " throughout the day.";
+
+      div.appendChild(myTripTo);
+      div.appendChild(datetime);
+      div.appendChild(text);
+      div.appendChild(min_max_temp);
+      div.appendChild(description);
+
+      div.appendChild(img);
+
+      $("#listTrips").append(div);
+    });
+  }
+}
+export { handleSubmit, validateInput, updateListTrips };

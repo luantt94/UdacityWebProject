@@ -1,14 +1,16 @@
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+.container {
+  /*   background-color: cyan; */
+  /*   width: 1000px; */
+  margin: 30px auto;
 
-main {
-  flex: 2;
+  display: grid;
+  grid-template-rows: 100px auto-fit auto-fit 100px;
+  grid-template-columns: 1fr 4fr;
 }
-
-section {
-  max-width: 800px;
-  margin: 50px auto;
+.item {
+  flex-grow: 1;
+  padding: 20px;
+  font-size: 30px;
+  font-family: sans-serif;
+  color: red;
 }

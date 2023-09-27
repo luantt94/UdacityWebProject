@@ -73,6 +73,7 @@ app.post("/test", function (req, res) {
                 app_min_temp,
                 datetime,
                 img,
+                location,
               };
               console.log(weatherData);
               res.send(weatherData);

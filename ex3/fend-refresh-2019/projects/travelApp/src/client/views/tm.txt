@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Test</title>
+    <link rel="stylesheet" href="/styles/resets.scss" />
+    <link rel="stylesheet" href="/styles/base.scss" />
+    <link rel="stylesheet" href="/styles/header.scss" />
+    <link rel="stylesheet" href="/styles/form.scss" />
+    <link rel="stylesheet" href="./styles/footer.scss" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <div class="">Logo</div>
+      <div class="">navigation</div>
+    </header>
+
+    <main>
+      <section>
+        <form class="" onsubmit="return Client.handleSubmit(event)">
+          <input
+            id="location"
+            type="text"
+            name="input"
+            value=""
+            onblur="onBlur()"
+            placeholder="Locations"
+          />
+          <label for="Departing">Departing:</label>
+          <input type="date" id="departing" name="Departing" />
+          <input
+            type="submit"
+            name=""
+            value="submit"
+            onclick="return Client.handleSubmit(event)"
+            onsubmit="return Client.handleSubmit(event)"
+          />
+        </form>
+      </section>
+
+      <section>
+        <strong>Form Results:</strong>
+        <div id="results"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>This is a footer</p>
+    </footer>
+
+    <script>
+      let today = new Date().toISOString().split("T")[0];
+      $("#departing").attr({ min: today });
+
+      var max_date = new Date();
+
+      // add a day
+      max_date.setDate(max_date.getDate() + 16);
+      max_date = max_date.toISOString().split("T")[0];
+      $("#departing").attr({ max: max_date });
+
+      // Check that service workers are supported
+      if ("serviceWorker" in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/service-worker.js");
+        });
+      }
+    </script>
+  </body>
+</html>

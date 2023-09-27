@@ -1,13 +1,14 @@
 import { checkForName } from "./js/nameChecker";
-import { handleSubmit } from "./js/formHandler";
+import { handleSubmit, updateListTrips } from "./js/formHandler";
 
-import "./styles/resets.scss";
 import "./styles/base.scss";
+import "./styles/content.scss";
 import "./styles/footer.scss";
-import "./styles/form.scss";
 import "./styles/header.scss";
+import "./styles/leftSide.scss";
+import "./styles/narbar.scss";
+import "./styles/style.scss";
 
 console.log(checkForName);
 
-
-export { checkForName, handleSubmit };
+export { checkForName, handleSubmit, updateListTrips };

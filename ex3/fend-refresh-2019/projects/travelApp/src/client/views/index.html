@@ -1,73 +1,118 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Test</title>
-    <link rel="stylesheet" href="/styles/resets.scss" />
-    <link rel="stylesheet" href="/styles/base.scss" />
-    <link rel="stylesheet" href="/styles/header.scss" />
-    <link rel="stylesheet" href="/styles/form.scss" />
-    <link rel="stylesheet" href="./styles/footer.scss" />
+    <title>Exercise 1</title>
+    <meta
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+      name="viewport"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/styles/base.css" />
+    <link rel="stylesheet" href="/styles/content.css" />
+    <link rel="stylesheet" href="/styles/footer.css" />
+    <link rel="stylesheet" href="/styles/header.css" />
+    <link rel="stylesheet" href="/styles/leftSide.css" />
+    <link rel="stylesheet" href="/styles/narbar.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
+
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   </head>
 
   <body>
-    <header>
-      <div class="">Logo</div>
-      <div class="">navigation</div>
-    </header>
+    <div class="container">
+      <div class="item header">
+        <div id="logo"></div>
+        <h1 class="headerItem" id="title">
+        
+        TRAVEL AROUND THE WORLDS</h1>
+      </div>
+      <div class="item leftSide">
+        <a href="post1.html">the previous post</a>
+        <a href="post2.html">the latest post</a>
+        <button id="btn-Follow">Follow</button>
+        <button id="btn-subscribe">Subscribe</button>
+      </div>
+      <div class="item content" id="listTrips">
 
-    <main>
-      <section>
-        <form class="" onsubmit="return Client.handleSubmit(event)">
-          <input
-            id="location"
-            type="text"
-            name="input"
-            value=""
-            onblur="onBlur()"
-            placeholder="Locations"
-          />
-          <label for="Departing">Departing:</label>
-          <input type="date" id="departing" name="Departing" />
-          <input
-            type="submit"
-            name=""
-            value="submit"
-            onclick="return Client.handleSubmit(event)"
-            onsubmit="return Client.handleSubmit(event)"
-          />
-        </form>
-      </section>
-
-      <section>
-        <strong>Form Results:</strong>
-        <div id="results"></div>
-      </section>
-    </main>
-
-    <footer>
-      <p>This is a footer</p>
-    </footer>
-
-    <script>
-      let today = new Date().toISOString().split("T")[0];
-      $("#departing").attr({ min: today });
-
-      var max_date = new Date();
-
-      // add a day
-      max_date.setDate(max_date.getDate() + 16);
-      max_date = max_date.toISOString().split("T")[0];
-      $("#departing").attr({ max: max_date });
-
-      // Check that service workers are supported
-      if ("serviceWorker" in navigator) {
-        // Use the window load event to keep the page load performant
-        window.addEventListener("load", () => {
-          navigator.serviceWorker.register("/service-worker.js");
-        });
-      }
-    </script>
+      </div>
+      <div class="item narbar">
+        <section>
+          <form class="" onsubmit="return Client.handleSubmit(event)">
+            <input
+              id="location"
+              type="text"
+              name="input"
+              value="London"
+              onblur="onBlur()"
+              placeholder="Locations"
+            />
+            <label for="Departing">Departing:</label>
+            <input type="date" id="departing" name="Departing" />
+            <input
+              type="submit"
+              name=""
+              value="submit"
+              onclick="return Client.handleSubmit(event)"
+              onsubmit="return Client.handleSubmit(event)"
+            />
+            <input
+              id="saveTrip"
+              type="button"
+              name=""
+              value="Save trip"
+              disabled
+            />
+            <input
+              id="deleteAllTrips"
+              type="button"
+              name=""
+              value="Delete all"
+            />
+          </form>
+        </section>
+  
+        <section> 
+          <div id="results">
+          </div>
+        </section>
+      </div>
+      <div class="item footer">
+        <div class="footer-item "><h3>About my Web site</h3>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+        </div>
+        <div class="footer-item "><h3>Contact</h3>
+          <i class="fa fa-envelope" aria-hidden="true">abc@gmail.com </i>
+        </div>
+        <div class="footer-item "><h3>Social</h3>
+          <i class="fa fa-facebook" aria-hidden="true">facebook.com/</i>
+          <i class="fa-brands fa-twitter">Twitter</i>
+      </div>
+    
   </body>
+  <script>
+    document.getElementById('departing').valueAsDate = new Date();
+    let today = new Date().toISOString().split("T")[0];
+    $("#departing").attr({ min: today });
+    
+
+    var max_date = new Date();
+
+    // add a day
+    max_date.setDate(max_date.getDate() + 16);
+    max_date = max_date.toISOString().split("T")[0];
+    $("#departing").attr({ max: max_date });
+
+    // Check that service workers are supported
+    if ("serviceWorker" in navigator) {
+      // Use the window load event to keep the page load performant
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/service-worker.js");
+      });
+    }
+    Client.updateListTrips()
+  </script>
 </html>
