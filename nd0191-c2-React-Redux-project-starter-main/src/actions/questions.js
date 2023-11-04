@@ -1,6 +1,7 @@
 import questions from "../reducers/questions";
 import { saveQuestion, saveQuestionAnswer } from "../utils/api";
 import { showLoading, hideLoading } from "react-redux-loading-bar";
+import { insertQIdToAuthor } from "./users";
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 export const ADD_QUESTION = "ADD_QUESTION";
 export const VOTE_QUESTION_ANSWER = "VOTE_QUESTION_ANSWER";
@@ -24,7 +25,6 @@ function voteQuestionAnswer({ authedUser, qid, answer }) {
 export function handleVoteOption(authedUser, qid, answer) {
   saveQuestionAnswer({ authedUser, qid, answer });
   return (dispatch) => {
-    console.log("calling action dispatch handleVoteOption");
     return dispatch(voteQuestionAnswer({ authedUser, qid, answer }));
   };
 
@@ -39,18 +39,20 @@ export function handleVoteOption(authedUser, qid, answer) {
   // };
 }
 
-export function handleAddQuestion(text, replyingTo) {
+export function handleAddQuestion(values) {
   return (dispatch, getState) => {
     const { authedUser } = getState();
 
     dispatch(showLoading());
-
     return saveQuestion({
-      text,
+      optionOneText: values.optionOneText,
+      optionTwoText: values.optionTwoText,
       author: authedUser,
-      replyingTo,
     })
-      .then((question) => dispatch(addQuestion(question)))
+      .then((question) => {
+        dispatch(addQuestion(question));
+        dispatch(insertQIdToAuthor(question.author, question.id));
+      })
       .then(() => dispatch(hideLoading()));
   };
 }

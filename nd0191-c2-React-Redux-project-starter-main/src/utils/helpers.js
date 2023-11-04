@@ -15,13 +15,9 @@ export function formatQuestion(question) {
 }
 
 export function getQuestionStatus(questions, authedUser, questionId) {
-  console.log("getQuestionStatus");
   const isDone =
     questions[questionId].optionOne.votes.includes(authedUser) ||
     questions[questionId].optionTwo.votes.includes(authedUser);
-  console.log(questions[questionId].optionOne.votes);
-  console.log(questions[questionId].optionTwo.votes);
-  console.log(isDone);
   return {
     isDone,
     author: questions[questionId].author,

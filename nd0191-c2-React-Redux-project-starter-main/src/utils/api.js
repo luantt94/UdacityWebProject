@@ -19,6 +19,5 @@ export function saveQuestion(info) {
 }
 
 export function saveQuestionAnswer(info) {
-  console.log("Calling _saveQuestionAnswer");
   return _saveQuestionAnswer(info);
 }

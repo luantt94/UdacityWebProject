@@ -179,17 +179,12 @@ export function _saveQuestion(question) {
         ...questions,
         [formattedQuestion.id]: formattedQuestion,
       };
-
       resolve(formattedQuestion);
     }, 1000);
   });
 }
 
 export function _saveQuestionAnswer({ authedUser, qid, answer }) {
-  console.log("answer");
-  console.log(answer);
-  console.log(qid);
-  console.log(authedUser);
   return new Promise((resolve, reject) => {
     if (!authedUser || !qid || !answer) {
       reject("Please provide authedUser, qid, and answer");
@@ -206,7 +201,6 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
           },
         },
       };
-      console.log(questions);
       questions = {
         ...questions,
         [qid]: {
@@ -217,7 +211,6 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }) {
           },
         },
       };
-      console.log(questions);
       resolve(true);
     }, 500);
   });

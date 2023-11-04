@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 // import NewQuestion from "./NewQuestion ";
 import { handleVoteOption } from "../actions/questions";
 import { getQuestionStatus } from "../utils/helpers";
+import { userVoteAnswer } from "../actions/users";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const withRouter = (Component) => {
@@ -20,8 +21,8 @@ const QuestionPage = (props) => {
   const selectOption = (e, answer) => {
     e.preventDefault();
     const { dispatch } = props;
-    console.log("Calling handleVoteOption");
     dispatch(handleVoteOption(props.authedUser, props.id, answer));
+    dispatch(userVoteAnswer(props.authedUser, props.id, answer));
   };
   return (
     <div>

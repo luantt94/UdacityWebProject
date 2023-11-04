@@ -3,43 +3,51 @@ import { connect } from "react-redux";
 import { handleAddQuestion } from "../actions/questions";
 import { useNavigate } from "react-router-dom";
 
-const NewQuestion = ({ dispatch, id }) => {
+const NewQuestion = ({ dispatch }) => {
   const navigate = useNavigate();
-  const [text, setText] = useState("");
+  const [values, setValues] = useState({
+    optionOneText: "",
+    optionTwoText: "",
+  });
+  const { optionOneText, optionTwoText } = values;
 
-  const handleChange = (e) => {
-    const text = e.target.value;
-
-    setText(text);
+  const handleChange = (name) => (event) => {
+    setValues({ ...values, [name]: event.target.value });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(handleAddQuestion(text, id));
+    dispatch(handleAddQuestion(values));
 
-    setText("");
-
-    if (!id) {
-      navigate("/");
-    }
+    setValues({ ...values, optionOneText: "", optionTwoText: "" });
   };
-
-  const tweetLeft = 280 - text.length;
 
   return (
     <div>
-      <h3 className="center">Compose new Question</h3>
+      <h3 className="center">Would You Rather</h3>
+      <h4 className="center">Create Your Own Poll</h4>
       <form className="new-question" onSubmit={handleSubmit}>
-        <textarea
-          placeholder="What's happening?"
-          value={text}
-          onChange={handleChange}
-          className="textarea"
-          maxLength={280}
-        />
-        {tweetLeft <= 100 && <div className="question-length">{tweetLeft}</div>}
-        <button className="btn" type="submit" disabled={text === ""}>
+        <label>First Option</label>
+        <br />
+        <input
+          onChange={handleChange("optionOneText")}
+          value={optionOneText}
+          type="text"
+        ></input>
+        <br />
+        <label>Second Option</label>
+        <br />
+        <input
+          onChange={handleChange("optionTwoText")}
+          value={optionTwoText}
+          type="text"
+        ></input>
+        <br />
+        <button
+          className="btn"
+          type="submit"
+          disabled={optionOneText === "" || optionTwoText === ""}
+        >
           Submit
         </button>
       </form>
