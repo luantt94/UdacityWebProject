@@ -1,20 +1,32 @@
 import { connect } from "react-redux";
 import { formatQuestion, formatDate } from "../utils/helpers";
 import { useNavigate } from "react-router-dom";
+import { Fragment } from "react";
 
 const LeaderBoard = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      {props.userIds.map((id) => (
-        <li key={id}>
-          <h1>{id}</h1>
-          <h1>answer {Object.keys(props.users[id].answers).length}</h1>
-          <h1>question {props.users[id].questions.length}</h1>
-        </li>
-      ))}
-    </div>
+    <Fragment>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Users</th>
+            <th scope="col">Answered</th>
+            <th scope="col">Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.userIds.map((id) => (
+            <tr key={id}>
+              <td>{id}</td>
+              <td>{Object.keys(props.users[id].answers).length}</td>
+              <td>{props.users[id].questions.length}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </Fragment>
   );
 };
 
