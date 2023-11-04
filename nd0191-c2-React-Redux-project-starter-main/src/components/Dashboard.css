@@ -1,0 +1,27 @@
+.center {
+  text-align: center;
+  border-bottom: 1px solid black;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.dashboard {
+  border: 1px solid black;
+  margin-top: 20px;
+}
+
+.dashboard-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.dashboard-list li {
+  display: flex;
+  border: 1px solid black;
+  border-radius: 5px;
+  list-style-type: none;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
