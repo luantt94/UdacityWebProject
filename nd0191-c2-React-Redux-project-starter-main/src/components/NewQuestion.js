@@ -1,10 +1,19 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { handleAddQuestion } from "../actions/questions";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const NewQuestion = ({ dispatch }) => {
+  const user = useSelector((state) => state.authedUser);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (user == "") {
+      navigate("/login");
+    }
+  }, []);
+
   const [values, setValues] = useState({
     optionOneText: "",
     optionTwoText: "",

@@ -27,6 +27,7 @@ const App = (props) => {
             <Route path="/new" element={<NewQuestion />} />
             <Route path="/leaderboard" element={<LeaderBoard />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Login />} />
           </Routes>
         )}
       </div>

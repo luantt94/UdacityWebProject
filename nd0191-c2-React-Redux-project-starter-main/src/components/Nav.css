@@ -1,9 +1,19 @@
 .nav_b {
   display: flex;
   gap: 20px;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 
 li {
   list-style-type: none;
+}
+
+.nav1 {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+.nav2 {
+  display: flex;
+  gap: 20px;
 }

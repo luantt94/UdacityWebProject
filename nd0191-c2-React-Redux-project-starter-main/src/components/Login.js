@@ -1,43 +1,38 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { setAuthedUser } from "../actions/authedUser";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [error, setError] = useState("");
-
-  // const handleLogin = () => {
-  //   getInitialData().then(({ users }) => {
-  //     const user = users[username];
-  //     if (user && user.password === password) {
-  //       localStorage.setItem("isLoggedIn", "true");
-  //       localStorage.setItem("username", username);
-  //       window.location.href = "/";
-  //     } else {
-  //       setError("Invalid username or password");
-  //     }
-  //   });
-  // };
-
+const Login = (props) => {
+  console.log("go to login");
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    var e = document.getElementById("selectUser");
+    var value = e.value;
+    props.dispatch(setAuthedUser(value));
+    // navigate(`/`);
+    navigate(-1);
+  };
   return (
-    <div>
-      <h2>Login</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        // value={username}
-        // onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        // value={password}
-        // onChange={(e) => setPassword(e.target.value)}
-      />
-      {/* <button onClick={handleLogin}>Login</button>
-      {error && <p>{error}</p>} */}
-      <button>Login</button>
-    </div>
+    <>
+      <label>Login as </label>
+      <select name="selectUser" id="selectUser">
+        {Object.keys(props.users).map((id, i) => (
+          <option key={id} value={id}>
+            {props.users[id].name}
+          </option>
+        ))}
+      </select>
+      <br />
+      <button className="btn" onClick={handleLogin}>
+        Login
+      </button>
+    </>
   );
 };
 
-export default Login;
+const mapStateToProps = ({ users }) => ({
+  users,
+});
+
+export default connect(mapStateToProps)(Login);

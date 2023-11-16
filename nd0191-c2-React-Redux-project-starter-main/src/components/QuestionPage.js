@@ -5,6 +5,7 @@ import { handleVoteOption } from "../actions/questions";
 import { getQuestionStatus } from "../utils/helpers";
 import { userVoteAnswer } from "../actions/users";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const withRouter = (Component) => {
   const ComponentWithRouterProp = (props) => {
@@ -18,6 +19,12 @@ const withRouter = (Component) => {
 };
 
 const QuestionPage = (props) => {
+  useEffect(() => {
+    if (props.authedUser == "") {
+      props.router.navigate("/login");
+    }
+  }, []);
+
   const selectOption = (e, answer) => {
     e.preventDefault();
     const { dispatch } = props;
@@ -26,7 +33,8 @@ const QuestionPage = (props) => {
   };
   return (
     <div>
-      <h1>Poll by {props.question.author}</h1>
+      <h1>Poll by {props.users[props.question.author].name}</h1>
+      <img src={"/" + props.users[props.question.author].avatarURL} />
       <h1>{props.question.optionOne}</h1>
       <button
         onClick={(e) => selectOption(e, "optionOne")}
@@ -45,13 +53,14 @@ const QuestionPage = (props) => {
   );
 };
 
-const mapStateToProps = ({ authedUser, questions }, props) => {
+const mapStateToProps = ({ authedUser, questions, users }, props) => {
   const { id } = props.router.params;
 
   return {
     id,
     authedUser,
     question: getQuestionStatus(questions, authedUser, id),
+    users,
   };
 };
 
