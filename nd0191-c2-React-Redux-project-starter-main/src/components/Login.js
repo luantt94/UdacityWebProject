@@ -15,16 +15,21 @@ const Login = (props) => {
   };
   return (
     <>
-      <label>Login as </label>
+      <label>Login as</label>
       <select name="selectUser" id="selectUser">
-        {Object.keys(props.users).map((id, i) => (
-          <option key={id} value={id}>
-            {props.users[id].name}
-          </option>
-        ))}
+        {Object.keys(props.users).map((id, i) => {
+          console.log("id");
+          console.log(id);
+          console.log(i);
+          return (
+            <option id={id} key={id} value={id}>
+              {props.users[id].name}
+            </option>
+          );
+        })}
       </select>
       <br />
-      <button className="btn" onClick={handleLogin}>
+      <button data-testid="btnLogin" className="btn" onClick={handleLogin}>
         Login
       </button>
     </>

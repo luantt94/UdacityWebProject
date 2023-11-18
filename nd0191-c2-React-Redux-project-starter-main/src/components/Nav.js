@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Nav.css";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux";
 import { removeAuthedUser } from "../actions/authedUser";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -13,6 +13,8 @@ const Nav = (props) => {
 
   console.log("user");
   console.log(user);
+  console.log("users");
+  console.log(users);
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(removeAuthedUser());
