@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Page404 from "./Page404";
 
 const withRouter = (Component) => {
   const ComponentWithRouterProp = (props) => {
@@ -34,80 +35,103 @@ const QuestionPage = (props) => {
     dispatch(handleVoteOption(props.authedUser, props.id, answer));
     dispatch(userVoteAnswer(props.authedUser, props.id, answer));
   };
-  const percen1 = Math.round(
-    (props.question.voteForOne * 100) /
-      (props.question.voteForOne + props.question.voteForTwo)
-  );
-  const percen2 = 100 - percen1;
+
   return (
     <div>
-      <div align="center">
-        <h1>Poll by {props.users[props.question.author].name}</h1>
-        <img src={"/" + props.users[props.question.author].avatarURL} />
-      </div>
+      {props.id == "" ? (
+        <Page404 />
+      ) : (
+        <>
+          <div align="center">
+            <h1>Poll by {props.users[props.question.author].name}</h1>
+            <img src={"/" + props.users[props.question.author].avatarURL} />
+          </div>
 
-      <Container>
-        <Row>
-          <Col>
-            <h1>{props.question.optionOne}</h1>
-          </Col>
-          <Col>
-            <h1>{props.question.optionTwo}</h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h3>Number of votes: {props.question.voteForOne}</h3>
-            <h3>{percen1}% of people voted for this option.</h3>
-          </Col>
-          <Col>
-            <h3>Number of votes: {props.question.voteForTwo}</h3>
-            <h3>{percen2}% of people voted for this option.</h3>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            {props.question.isDone ? (
-              <></>
-            ) : (
-              <button onClick={(e) => selectOption(e, "optionOne")}>
-                Vote for Option 1
-              </button>
-            )}
+          <Container>
+            <Row>
+              <Col>
+                <h1>{props.question.optionOne}</h1>
+              </Col>
+              <Col>
+                <h1>{props.question.optionTwo}</h1>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h3>Number of votes: {props.question.voteForOne}</h3>
+                <h3>
+                  {Math.round(
+                    (props.question.voteForOne * 100) /
+                      (props.question.voteForOne + props.question.voteForTwo)
+                  )}
+                  % of people voted for this option.
+                </h3>
+              </Col>
+              <Col>
+                <h3>Number of votes: {props.question.voteForTwo}</h3>
+                <h3>
+                  {100 -
+                    Math.round(
+                      (props.question.voteForOne * 100) /
+                        (props.question.voteForOne + props.question.voteForTwo)
+                    )}
+                  % of people voted for this option.
+                </h3>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {props.question.isDone ? (
+                  <></>
+                ) : (
+                  <button onClick={(e) => selectOption(e, "optionOne")}>
+                    Vote for Option 1
+                  </button>
+                )}
 
-            {props.question.userVoteForOne.includes(props.authedUser) ? (
-              <>
-                <h2>You are voted for this option</h2>
-              </>
-            ) : (
-              <></>
-            )}
-          </Col>
-          <Col>
-            {props.question.isDone ? (
-              <></>
-            ) : (
-              <button onClick={(e) => selectOption(e, "optionTwo")}>
-                Vote for Option 1
-              </button>
-            )}
-            {props.question.userVoteForTwo.includes(props.authedUser) ? (
-              <>
-                <h2>You are voted for this option</h2>
-              </>
-            ) : (
-              <></>
-            )}
-          </Col>
-        </Row>
-      </Container>
+                {props.question.userVoteForOne.includes(props.authedUser) ? (
+                  <>
+                    <h2 style={{ backgroundColor: "#FF0000" }}>
+                      You are voted for this option
+                    </h2>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </Col>
+              <Col>
+                {props.question.isDone ? (
+                  <></>
+                ) : (
+                  <button onClick={(e) => selectOption(e, "optionTwo")}>
+                    Vote for Option 2
+                  </button>
+                )}
+                {props.question.userVoteForTwo.includes(props.authedUser) ? (
+                  <>
+                    <h2 style={{ backgroundColor: "#FF0000" }}>
+                      You are voted for this option
+                    </h2>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </Col>
+            </Row>
+          </Container>
+        </>
+      )}
     </div>
   );
 };
 
 const mapStateToProps = ({ authedUser, questions, users }, props) => {
   const { id } = props.router.params;
-
+  if (!questions.hasOwnProperty(id)) {
+    return {
+      id: "",
+    };
+  }
   return {
     id,
     authedUser,
