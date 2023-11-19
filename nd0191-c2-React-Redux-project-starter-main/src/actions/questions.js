@@ -1,4 +1,3 @@
-import questions from "../reducers/questions";
 import { saveQuestion, saveQuestionAnswer } from "../utils/api";
 import { showLoading, hideLoading } from "react-redux-loading-bar";
 import { insertQIdToAuthor } from "./users";
