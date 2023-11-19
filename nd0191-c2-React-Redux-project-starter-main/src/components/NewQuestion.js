@@ -4,6 +4,9 @@ import { handleAddQuestion } from "../actions/questions";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const NewQuestion = ({ dispatch }) => {
   const user = useSelector((state) => state.authedUser);
@@ -29,6 +32,7 @@ const NewQuestion = ({ dispatch }) => {
     dispatch(handleAddQuestion(values));
 
     setValues({ ...values, optionOneText: "", optionTwoText: "" });
+    navigate("/");
   };
 
   return (
@@ -36,22 +40,32 @@ const NewQuestion = ({ dispatch }) => {
       <h3 className="center">Would You Rather</h3>
       <h4 className="center">Create Your Own Poll</h4>
       <form className="new-question" onSubmit={handleSubmit}>
-        <label>First Option</label>
-        <br />
-        <input
-          onChange={handleChange("optionOneText")}
-          value={optionOneText}
-          type="text"
-        ></input>
-        <br />
-        <label>Second Option</label>
-        <br />
-        <input
-          onChange={handleChange("optionTwoText")}
-          value={optionTwoText}
-          type="text"
-        ></input>
-        <br />
+        <Container>
+          <Row>
+            <Col>
+              <label>First Option</label>
+            </Col>
+            <Col>
+              <label>Second Option</label>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <input
+                onChange={handleChange("optionOneText")}
+                value={optionOneText}
+                type="text"
+              ></input>
+            </Col>
+            <Col>
+              <input
+                onChange={handleChange("optionTwoText")}
+                value={optionTwoText}
+                type="text"
+              ></input>
+            </Col>
+          </Row>
+        </Container>
         <button
           className="btn"
           type="submit"

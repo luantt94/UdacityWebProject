@@ -19,24 +19,48 @@ Object {
         <form
           class="new-question"
         >
-          <label>
-            First Option
-          </label>
-          <br />
-          <input
-            type="text"
-            value=""
-          />
-          <br />
-          <label>
-            Second Option
-          </label>
-          <br />
-          <input
-            type="text"
-            value=""
-          />
-          <br />
+          <div
+            class="container"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <label>
+                  First Option
+                </label>
+              </div>
+              <div
+                class="col"
+              >
+                <label>
+                  Second Option
+                </label>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <input
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class="col"
+              >
+                <input
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
           <button
             class="btn"
             disabled=""
@@ -63,24 +87,48 @@ Object {
       <form
         class="new-question"
       >
-        <label>
-          First Option
-        </label>
-        <br />
-        <input
-          type="text"
-          value=""
-        />
-        <br />
-        <label>
-          Second Option
-        </label>
-        <br />
-        <input
-          type="text"
-          value=""
-        />
-        <br />
+        <div
+          class="container"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <label>
+                First Option
+              </label>
+            </div>
+            <div
+              class="col"
+            >
+              <label>
+                Second Option
+              </label>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="col"
+            >
+              <input
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="col"
+            >
+              <input
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
         <button
           class="btn"
           disabled=""

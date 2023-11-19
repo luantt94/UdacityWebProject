@@ -4,7 +4,6 @@ import { setAuthedUser } from "../actions/authedUser";
 import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
-  console.log("go to login");
   const navigate = useNavigate();
   const handleLogin = () => {
     var e = document.getElementById("selectUser");
@@ -18,9 +17,6 @@ const Login = (props) => {
       <label>Login as</label>
       <select name="selectUser" id="selectUser">
         {Object.keys(props.users).map((id, i) => {
-          console.log("id");
-          console.log(id);
-          console.log(i);
           return (
             <option id={id} key={id} value={id}>
               {props.users[id].name}

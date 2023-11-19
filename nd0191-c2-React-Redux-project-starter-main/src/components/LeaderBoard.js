@@ -50,7 +50,11 @@ const compareUsers = (user1, user2) => {
 
 const mapStateToProps = ({ users, authedUser }) => ({
   userIds: Object.keys(users).sort(
-    (a, b) => users[b].questions.length - users[a].questions.length
+    (a, b) =>
+      users[b].questions.length +
+      Object.keys(users[b].answers).length -
+      users[a].questions.length -
+      Object.keys(users[a].answers).length
   ),
   users,
   authedUser,

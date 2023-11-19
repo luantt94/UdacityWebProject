@@ -11,10 +11,6 @@ const Nav = (props) => {
   const user = useSelector((state) => state.authedUser);
   const users = useSelector((state) => state.users);
 
-  console.log("user");
-  console.log(user);
-  console.log("users");
-  console.log(users);
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(removeAuthedUser());

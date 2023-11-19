@@ -6,6 +6,23 @@ Object {
   "baseElement": <body>
     <div>
       <div>
+        <input
+          checked=""
+          name="toggle"
+          type="radio"
+          value="true"
+        />
+        <label>
+          unanswered polls
+        </label>
+        <input
+          name="toggle"
+          type="radio"
+          value="false"
+        />
+        <label>
+          answered polls
+        </label>
         <div
           class="dashboard"
         >
@@ -17,19 +34,6 @@ Object {
           <ul
             class="dashboard-list"
           >
-            <li>
-              <div>
-                sarahedo
-                <div>
-                  9:21:AM | 6/29/2016
-                </div>
-                <button
-                  class="btn-quesion"
-                >
-                  Show
-                </button>
-              </div>
-            </li>
             <li>
               <div>
                 sarahedo
@@ -56,50 +60,11 @@ Object {
                 </button>
               </div>
             </li>
-          </ul>
-        </div>
-        <div
-          class="dashboard"
-        >
-          <h3
-            class="center"
-          >
-            Done
-          </h3>
-          <ul
-            class="dashboard-list"
-          >
             <li>
               <div>
-                mtsamis
+                sarahedo
                 <div>
-                  2:02:PM | 7/14/2016
-                </div>
-                <button
-                  class="btn-quesion"
-                >
-                  Show
-                </button>
-              </div>
-            </li>
-            <li>
-              <div>
-                tylermcginnis
-                <div>
-                  7:09:PM | 3/15/2017
-                </div>
-                <button
-                  class="btn-quesion"
-                >
-                  Show
-                </button>
-              </div>
-            </li>
-            <li>
-              <div>
-                mtsamis
-                <div>
-                  2:16:AM | 5/1/2017
+                  9:21:AM | 6/29/2016
                 </div>
                 <button
                   class="btn-quesion"
@@ -115,6 +80,23 @@ Object {
   </body>,
   "container": <div>
     <div>
+      <input
+        checked=""
+        name="toggle"
+        type="radio"
+        value="true"
+      />
+      <label>
+        unanswered polls
+      </label>
+      <input
+        name="toggle"
+        type="radio"
+        value="false"
+      />
+      <label>
+        answered polls
+      </label>
       <div
         class="dashboard"
       >
@@ -126,19 +108,6 @@ Object {
         <ul
           class="dashboard-list"
         >
-          <li>
-            <div>
-              sarahedo
-              <div>
-                9:21:AM | 6/29/2016
-              </div>
-              <button
-                class="btn-quesion"
-              >
-                Show
-              </button>
-            </div>
-          </li>
           <li>
             <div>
               sarahedo
@@ -165,50 +134,11 @@ Object {
               </button>
             </div>
           </li>
-        </ul>
-      </div>
-      <div
-        class="dashboard"
-      >
-        <h3
-          class="center"
-        >
-          Done
-        </h3>
-        <ul
-          class="dashboard-list"
-        >
           <li>
             <div>
-              mtsamis
+              sarahedo
               <div>
-                2:02:PM | 7/14/2016
-              </div>
-              <button
-                class="btn-quesion"
-              >
-                Show
-              </button>
-            </div>
-          </li>
-          <li>
-            <div>
-              tylermcginnis
-              <div>
-                7:09:PM | 3/15/2017
-              </div>
-              <button
-                class="btn-quesion"
-              >
-                Show
-              </button>
-            </div>
-          </li>
-          <li>
-            <div>
-              mtsamis
-              <div>
-                2:16:AM | 5/1/2017
+                9:21:AM | 6/29/2016
               </div>
               <button
                 class="btn-quesion"

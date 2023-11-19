@@ -9,6 +9,7 @@ import LeaderBoard from "./LeaderBoard";
 import Nav from "./Nav";
 import { Routes, Route } from "react-router-dom";
 import Login from "./Login";
+import Page404 from "./Page404";
 
 const App = (props) => {
   useEffect(() => {
@@ -28,6 +29,7 @@ const App = (props) => {
             <Route path="/leaderboard" element={<LeaderBoard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Login />} />
+            <Route path="*" element={<Page404 />} />
           </Routes>
         )}
       </div>

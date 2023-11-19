@@ -23,6 +23,10 @@ export function getQuestionStatus(questions, authedUser, questionId) {
     author: questions[questionId].author,
     optionOne: questions[questionId].optionOne.text,
     optionTwo: questions[questionId].optionTwo.text,
+    voteForOne: questions[questionId].optionOne.votes.length,
+    voteForTwo: questions[questionId].optionTwo.votes.length,
+    userVoteForOne: questions[questionId].optionOne.votes,
+    userVoteForTwo: questions[questionId].optionTwo.votes,
   };
 }
 
