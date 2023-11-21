@@ -1,14 +1,21 @@
 import "./App.css";
 import { useState } from "react";
-import Book from "./Component/Book";
-import { getAll, update, get } from "./BooksAPI";
+import { getAll, update, get, search } from "./BooksAPI";
 import { useEffect } from "react";
 import Shelf from "./Component/Shelf";
+import { Route, Routes } from "react-router-dom";
+import Search from "./Component/Search";
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
   const [bookshelf, setBookshelf] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [query, setQuery] = useState("");
+
+  const updateQuery = (query) => {
+    setQuery(query);
+    searchBooks(query.toLowerCase());
+  };
 
   useEffect(() => {
     const getShelfBooks = async () => {
@@ -25,6 +32,7 @@ function App() {
 
     if (!bookshelf.find((book) => book.id === bookId)) {
       const newBook = await get(bookId);
+      newBook.shelf = newShelf;
       setBookshelf([...bookshelf, newBook]);
     } else {
       setBookshelf(
@@ -32,6 +40,20 @@ function App() {
           book.id === bookId ? { ...book, shelf: newShelf } : book
         )
       );
+    }
+  };
+  const searchBooks = async (query) => {
+    if (query.length > 0) {
+      const response = await search(query);
+      const books = Array.isArray(response) ? response : [response];
+      books.map((book) => {
+        const bookInShelf = bookshelf.find((b) => b.id === book.id);
+        book.shelf = bookInShelf !== undefined ? bookInShelf.shelf : "none";
+      });
+
+      setSearchResults(books);
+    } else {
+      setSearchResults([]);
     }
   };
 
@@ -50,9 +72,11 @@ function App() {
               <input
                 type="text"
                 placeholder="Search by title, author, or ISBN"
+                onChange={(event) => updateQuery(event.target.value)}
               />
             </div>
           </div>
+          <Search books={searchResults} updateBookState={updateBookState} />
           <div className="search-books-results">
             <ol className="books-grid"></ol>
           </div>

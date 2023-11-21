@@ -1,15 +1,11 @@
 import Book from "./Book";
 
 const Shelf = ({ bookshelf, updateBookState }) => {
-  console.log("props");
-  console.log(bookshelf);
   const currentlyReading = bookshelf.filter(
-    (b) => b.shelf == "currentlyReading"
+    (b) => b.shelf === "currentlyReading"
   );
-  const wantToRead = bookshelf.filter((b) => b.shelf == "wantToRead");
-  const read = bookshelf.filter((b) => b.shelf == "read");
-  console.log("currentlyReading");
-  console.log(currentlyReading);
+  const wantToRead = bookshelf.filter((b) => b.shelf === "wantToRead");
+  const read = bookshelf.filter((b) => b.shelf === "read");
   return (
     <>
       <div className="bookshelf">
@@ -19,6 +15,7 @@ const Shelf = ({ bookshelf, updateBookState }) => {
             {currentlyReading.map((book) => (
               <li key={book.title}>
                 <Book
+                  shelf={book.shelf}
                   author={book.authors}
                   title={book.title}
                   img={book.imageLinks.thumbnail}
@@ -37,6 +34,7 @@ const Shelf = ({ bookshelf, updateBookState }) => {
             {wantToRead.map((book) => (
               <li key={book.title}>
                 <Book
+                  shelf={book.shelf}
                   author={book.authors}
                   title={book.title}
                   img={book.imageLinks.thumbnail}
@@ -55,6 +53,7 @@ const Shelf = ({ bookshelf, updateBookState }) => {
             {read.map((book) => (
               <li key={book.title}>
                 <Book
+                  shelf={book.shelf}
                   author={book.authors}
                   title={book.title}
                   img={book.imageLinks.thumbnail}

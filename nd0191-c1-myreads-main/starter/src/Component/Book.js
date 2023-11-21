@@ -13,6 +13,7 @@ const Book = (props) => {
           ></div>
           <div className="book-shelf-changer">
             <select
+              defaultValue={props.shelf}
               onChange={(e) => props.updateBookState(props.id, e.target.value)}
             >
               <option value="none" disabled>
