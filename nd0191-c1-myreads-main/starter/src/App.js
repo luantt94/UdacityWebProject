@@ -2,18 +2,15 @@ import "./App.css";
 import { useState } from "react";
 import { getAll, update, get, search } from "./BooksAPI";
 import { useEffect } from "react";
-import Shelf from "./Component/Shelf";
 import { Route, Routes } from "react-router-dom";
-import Search from "./Component/Search";
+import HomePage from "./Component/HomePage";
+import SearchPage from "./Component/SearchPage";
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
   const [bookshelf, setBookshelf] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const [query, setQuery] = useState("");
 
   const updateQuery = (query) => {
-    setQuery(query);
     searchBooks(query.toLowerCase());
   };
 
@@ -27,17 +24,16 @@ function App() {
     getShelfBooks();
   }, []);
 
-  const updateBookState = async (bookId, newShelf) => {
-    update(bookId, newShelf);
+  const updateBookState = async (id, newShelf) => {
+    update(id, newShelf);
+    if (!bookshelf.find((book) => book.id === id)) {
+      const newBook = await get(id);
 
-    if (!bookshelf.find((book) => book.id === bookId)) {
-      const newBook = await get(bookId);
-      newBook.shelf = newShelf;
       setBookshelf([...bookshelf, newBook]);
     } else {
       setBookshelf(
         bookshelf.map((book) =>
-          book.id === bookId ? { ...book, shelf: newShelf } : book
+          book.id === id ? { ...book, shelf: newShelf } : book
         )
       );
     }
@@ -58,45 +54,25 @@ function App() {
   };
 
   return (
-    <div className="app">
-      {showSearchPage ? (
-        <div className="search-books">
-          <div className="search-books-bar">
-            <a
-              className="close-search"
-              onClick={() => setShowSearchpage(!showSearchPage)}
-            >
-              Close
-            </a>
-            <div className="search-books-input-wrapper">
-              <input
-                type="text"
-                placeholder="Search by title, author, or ISBN"
-                onChange={(event) => updateQuery(event.target.value)}
-              />
-            </div>
-          </div>
-          <Search books={searchResults} updateBookState={updateBookState} />
-          <div className="search-books-results">
-            <ol className="books-grid"></ol>
-          </div>
-        </div>
-      ) : (
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          <div className="list-books-content">
-            <div>
-              <Shelf bookshelf={bookshelf} updateBookState={updateBookState} />
-            </div>
-          </div>
-          <div className="open-search">
-            <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
-          </div>
-        </div>
-      )}
-    </div>
+    <Routes>
+      <Route
+        exact
+        path="/"
+        element={
+          <HomePage bookshelf={bookshelf} updateBookState={updateBookState} />
+        }
+      />
+      <Route
+        path="/search"
+        element={
+          <SearchPage
+            books={searchResults}
+            updateBookState={updateBookState}
+            updateQuery={updateQuery}
+          />
+        }
+      />
+    </Routes>
   );
 }
 
