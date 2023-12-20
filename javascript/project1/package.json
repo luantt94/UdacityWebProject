@@ -5,19 +5,27 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc"
+    "build": "npx tsc",
+    "jasmine": "jasmine",
+    "test": "npm run build && npm run jasmine"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/jasmine": "^5.1.4",
     "@types/node": "^20.10.1",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "@img/sharp-win32-x64": "^0.33.0",
+    "@types/lodash": "^4.14.202",
+    "express": "^4.18.2",
+    "jasmine": "^5.1.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "npm": "^10.2.4",
+    "sharp": "^0.33.0"
   }
 }
