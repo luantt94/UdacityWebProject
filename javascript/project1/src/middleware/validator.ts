@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
 
-const validator = async (
+export const validator = async (
   req: express.Request,
   res: express.Response,
   next: Function
@@ -15,7 +15,6 @@ const validator = async (
   if (filename != undefined) {
     let fullName: string = await getImageFile(filename.toString());
 
-    console.log("response", fullName);
     if (fullName == "") {
       err += filename + " does not exists. ";
     }
@@ -34,7 +33,7 @@ const validator = async (
   }
 };
 
-async function getImageFile(filename: string) {
+export async function getImageFile(filename: string) {
   const folderPath = "./images";
   let result = "";
   let names;
@@ -56,4 +55,4 @@ async function getImageFile(filename: string) {
   return result;
 }
 
-export default validator;
+// export default validator;
