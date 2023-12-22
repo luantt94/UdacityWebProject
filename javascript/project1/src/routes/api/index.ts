@@ -1,33 +1,21 @@
 import express, { Router, Request, Response } from "express";
-import sharp from "sharp";
 import fs from "fs";
-// import sharp from "sharp";
+import { imageProcessing } from "../../controller/imageProcessing";
 
 const router: Router = express.Router();
 
 router.get("/", async (req: Request, res: Response) => {
-  const { filename, width, height } = req.query;
+  // const filename: string = <string>req.query.filename || "";
+  // const width: string = <string>req.query.width || "";
+  // const height: string = <string>req.query.height || "";
+  const { filename, width, height } = req.query as {
+    filename: string;
+    width: string;
+    height: string;
+  };
+
   const newImgPath = `disk\\${filename}_${width}_${height}.jpg`;
-  const folderPath = "./disk";
-  let isExistedImg = false;
-
-  const names = await fs.promises.readdir(folderPath);
-  names.forEach((file) => {
-    if (file.split(".")[0] === filename) {
-      isExistedImg = true;
-      return;
-    }
-  });
-
-  if (!isExistedImg) {
-    await sharp(`images\\${filename}.jpg`)
-      .rotate()
-      .resize({ width: Number(width), height: Number(height) })
-      .toFile(newImgPath, (err, info) => {
-        console.log(info);
-      })
-      .toBuffer();
-  }
+  await imageProcessing(filename, width, height);
 
   const image = fs.readFileSync(newImgPath);
   res.setHeader("Content-Type", "image/jpeg");

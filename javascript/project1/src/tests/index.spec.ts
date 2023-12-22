@@ -3,7 +3,7 @@ import app from "../index";
 
 const request = supertest(app);
 describe("Test endpoint responses", () => {
-  it("gets the api endpoint", async () => {
+  it("Create image endpoint", async () => {
     const response = await request.get(
       "/api/images?filename=palmtunnel&width=200&height=200"
     );

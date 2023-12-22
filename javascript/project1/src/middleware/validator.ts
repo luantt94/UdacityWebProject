@@ -1,11 +1,12 @@
 import express from "express";
 import fs from "fs";
+import { NextFunction } from "express";
 
-export const validator = async (
+export async function validator(
   req: express.Request,
   res: express.Response,
-  next: Function
-): Promise<void> => {
+  next: NextFunction
+) {
   const { filename, width, height } = req.query;
 
   let err = "";
@@ -13,7 +14,7 @@ export const validator = async (
   err += width == undefined ? "width is undefined. " : "";
   err += height == undefined ? "height is undefined. " : "";
   if (filename != undefined) {
-    let fullName: string = await getImageFile(filename.toString());
+    const fullName: string = await getImageFile(filename.toString());
 
     if (fullName == "") {
       err += filename + " does not exists. ";
@@ -31,7 +32,7 @@ export const validator = async (
   } else {
     next();
   }
-};
+}
 
 export async function getImageFile(filename: string) {
   const folderPath = "./images";
@@ -54,5 +55,3 @@ export async function getImageFile(filename: string) {
 
   return result;
 }
-
-// export default validator;

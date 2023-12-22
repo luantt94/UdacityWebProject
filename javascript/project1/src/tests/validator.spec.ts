@@ -1,4 +1,4 @@
-const { getImageFile } = require("../middleware/validator");
+import { getImageFile } from "../middleware/validator";
 
 describe("Verify fuction getImageFile", () => {
   it("Find imgage fjord on images folder", async () => {
