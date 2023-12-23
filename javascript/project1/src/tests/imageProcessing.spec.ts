@@ -10,7 +10,6 @@ describe("Test endpoint responses", () => {
     let isExistedImg = false;
 
     const names = await fs.promises.readdir(folderPath);
-    console.log("names", names);
     names.forEach((file) => {
       if (file === "fjord_300_200.jpg") {
         isExistedImg = true;

@@ -1,6 +1,38 @@
 import sharp from "sharp";
 import fs from "fs";
-import { result } from "lodash";
+
+function delay(time: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+async function waitImageCreated(
+  newImgName: string,
+  folderPath: string
+): Promise<boolean> {
+  let isCreated: boolean = false;
+  let names;
+  let retry = 0;
+  while (!isCreated && retry < 5) {
+    try {
+      retry += 1;
+      await delay(1000);
+      names = await fs.promises.readdir(folderPath);
+      names.forEach((file) => {
+        if (file === newImgName) {
+          console.log("Image is created and available on disk");
+          isCreated = true;
+          return;
+        }
+      });
+      if (!isCreated && retry < 5) {
+        console.log("Image is not available on disk, wait 1 more second");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  return isCreated;
+}
 
 export async function imageProcessing(
   filename: string,
@@ -12,10 +44,8 @@ export async function imageProcessing(
   const folderPath = "./disk";
   let isExistedImg = false;
   let result = false;
-  let names;
 
-  names = await fs.promises.readdir(folderPath);
-  console.log("namesnames", names);
+  const names = await fs.promises.readdir(folderPath);
   names.forEach((file) => {
     if (file === newImgName) {
       isExistedImg = true;
@@ -25,35 +55,15 @@ export async function imageProcessing(
 
   if (!isExistedImg) {
     await sharp(`images\\${filename}.jpg`)
-      .rotate()
       .resize({ width: Number(width), height: Number(height) })
       .toFile(newImgPath, (err, info) => {
         console.log(info);
       })
-      .toBuffer()
-      .then((data) => {
-        console.log("Create images file successfully");
-      })
-      .catch((err) => {
-        console.log("Error happen while create image file", err);
-      });
+      .toBuffer();
   }
   //Check image is available on disk
-  try {
-    names = await fs.promises.readdir(folderPath);
-    names.forEach((file) => {
-      if (file === newImgName) {
-        console.log("Image is created and available on disk");
-        result = true;
-        return;
-      }
-    });
-    if (!result) {
-      console.log("Image is not available on disk");
-    }
-  } catch (err) {
-    console.log(err);
-    return result;
-  }
+  await waitImageCreated(newImgName, folderPath).then(
+    (data) => (result = data)
+  );
   return result;
 }

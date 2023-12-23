@@ -8,26 +8,45 @@ export async function validator(
   next: NextFunction
 ): Promise<void> {
   const { filename, width, height } = req.query;
-
   let err = "";
-  err += filename == undefined ? "filename is undefined. " : "";
-  err += width == undefined ? "width is undefined. " : "";
-  err += height == undefined ? "height is undefined. " : "";
+  if (filename == undefined && width == undefined && height == undefined) {
+    err = "<li> Missing filename, height and width.</li>";
+  }
+  if (filename == undefined && width == undefined && height != undefined) {
+    err = "<li> Missing filename and height.</li>";
+  }
+  if (filename == undefined && width != undefined && height == undefined) {
+    err = "<li> Missing filename and width.</li>";
+  }
+  if (filename == undefined && width != undefined && height != undefined) {
+    err = "<li> Missing filename.</li>";
+  }
+  if (filename != undefined && width == undefined && height == undefined) {
+    err = "<li> Missing height and width.</li>";
+  }
+  if (filename != undefined && width == undefined && height != undefined) {
+    err = "<li> Missing width.</li>";
+  }
+  if (filename != undefined && width != undefined && height == undefined) {
+    err = "<li> Missing height.</li>";
+  }
+
   if (filename != undefined) {
     const fullName: string = await getImageFile(filename.toString());
 
     if (fullName == "") {
-      err += filename + " does not exists. ";
+      err += `<li>Invalid input for filename e.g. ${filename} </li>`;
     }
   }
   if (width != undefined && !/^\d+$/.test(width.toString())) {
-    err += ". The value of width is not valid";
+    err += `<li>Invalid input for width e.g.  ${width} </li>`;
   }
   if (height != undefined && !/^\d+$/.test(height.toString())) {
-    err += ". The value of height is not valid";
+    err += `<li>Invalid input for height e.g.  ${height} </li>`;
   }
 
   if (err != "") {
+    err = `<ol>${err}</ol>`;
     res.status(400).send(err);
   } else {
     next();
