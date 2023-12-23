@@ -15,7 +15,15 @@ router.get("/", async (req: Request, res: Response) => {
   };
 
   const newImgPath = `disk\\${filename}_${width}_${height}.jpg`;
-  await imageProcessing(filename, width, height);
+  const result: boolean = await imageProcessing(filename, width, height);
+  if (!result) {
+    res
+      .status(400)
+      .send(
+        "There is some err while looking your files, try to refresh the page"
+      );
+    return;
+  }
 
   const image = fs.readFileSync(newImgPath);
   res.setHeader("Content-Type", "image/jpeg");

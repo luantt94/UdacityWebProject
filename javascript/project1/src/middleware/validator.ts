@@ -6,7 +6,7 @@ export async function validator(
   req: express.Request,
   res: express.Response,
   next: NextFunction
-) {
+): Promise<void> {
   const { filename, width, height } = req.query;
 
   let err = "";
@@ -34,7 +34,7 @@ export async function validator(
   }
 }
 
-export async function getImageFile(filename: string) {
+export async function getImageFile(filename: string): Promise<string> {
   const folderPath = "./images";
   let result = "";
   let names;
