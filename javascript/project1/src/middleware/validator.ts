@@ -7,7 +7,11 @@ export async function validator(
   res: express.Response,
   next: NextFunction
 ): Promise<void> {
-  const { filename, width, height } = req.query;
+  const { filename, width, height } = req.query as {
+    filename: string;
+    width: string;
+    height: string;
+  };
   let err = "";
   if (filename == undefined && width == undefined && height == undefined) {
     err = "<li> Missing filename, height and width.</li>";
@@ -32,16 +36,16 @@ export async function validator(
   }
 
   if (filename != undefined) {
-    const fullName: string = await getImageFile(filename.toString());
+    const fullName: string = await getImageFile(filename);
 
     if (fullName == "") {
       err += `<li>Invalid input for filename e.g. ${filename} </li>`;
     }
   }
-  if (width != undefined && !/^\d+$/.test(width.toString())) {
+  if (width != undefined && (!/^\d+$/.test(width) || Number(width) == 0)) {
     err += `<li>Invalid input for width e.g.  ${width} </li>`;
   }
-  if (height != undefined && !/^\d+$/.test(height.toString())) {
+  if (height != undefined && (!/^\d+$/.test(height) || Number(height) == 0)) {
     err += `<li>Invalid input for height e.g.  ${height} </li>`;
   }
 
