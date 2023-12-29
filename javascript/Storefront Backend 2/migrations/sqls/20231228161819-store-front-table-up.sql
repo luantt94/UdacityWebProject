@@ -1,8 +1,6 @@
-CREATE TABLE books (
+CREATE TABLE products (
     id SERIAL PRIMARY  KEY,
-    title VARCHAR(150),
-    total_pages integer,
-    author VARCHAR(255),
-    type VARCHAR(100),
-    summary text
+    name VARCHAR(150),
+    price integer,
+    image VARCHAR(255)
 );
