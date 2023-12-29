@@ -1,0 +1,12 @@
+npm install -g typescript
+npm install express  
+npm install typescript 
+npm install ts-node 
+npm install nodemon --save-dev
+npx tsc --init
+npm install typescript@latest
+npm install ts-node@latest
+
+
+Set-ExecutionPolicy RemoteSigned
+db-migrate create store-front-table --sql-file
