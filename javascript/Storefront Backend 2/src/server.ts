@@ -1,24 +1,30 @@
 import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
-import Client from "./database";
+import cors from "cors";
+import productRoutes from "./handlers/product";
+import userRoutes from "./handlers/user";
+import orderRoutes from "./handlers/order";
+import productOrderRoutes from "./handlers/product_order";
 
 const app: express.Application = express();
 const address: string = "0.0.0.0:3000";
 
-app.use(bodyParser.json());
+const corsOptions = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
-app.get("/products", async function (req: Request, res: Response) {
-  const conn = await Client.connect();
-  const sql = "SELECT * FROM products";
-  const result = await conn.query(sql);
-  console.log(result.rows);
-  conn.release();
-  res.send("Hello World!");
-});
+app.use(bodyParser.json());
 
 app.get("/", function (req: Request, res: Response) {
   res.send("Hello World!");
 });
+
+productRoutes(app);
+userRoutes(app);
+orderRoutes(app);
+productOrderRoutes(app);
 
 app.listen(3000, async function () {
   console.log(`starting app on: ${address}`);
