@@ -1,7 +1,6 @@
 import client from "../database";
 
 export type Order = {
-  id: number;
   user_id: number;
   total_price: number;
   status: number; //0 is not finished; 1 is finished

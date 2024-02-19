@@ -5,19 +5,26 @@ import { verifyToken } from "../middleware/VerifyToken";
 const store = new ProductStore();
 
 const index = async (req: Request, res: Response) => {
-  const products = await store.index();
-  res.json(products);
+  try {
+    const products = await store.index();
+    res.json(products);
+  } catch (err) {
+    throw new Error(`Error: ${err}`);
+  }
 };
 
 const show = async (req: Request, res: Response) => {
-  const product = await store.show(req.params.id);
-  res.json(product);
+  try {
+    const product = await store.show(req.params.id);
+    res.json(product);
+  } catch (err) {
+    throw new Error(`Error: ${err}`);
+  }
 };
 
 const create = async (req: Request, res: Response) => {
   try {
     const product: Product = {
-      id: 0,
       name: <string>req.query.name || "",
       price: Number(<string>req.query.price || "0"),
       quantity: Number(<string>req.query.quantity || ""),
@@ -32,8 +39,12 @@ const create = async (req: Request, res: Response) => {
 };
 
 const destroy = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.body.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.body.id);
+    res.json(deleted);
+  } catch (err) {
+    throw new Error(`Error: ${err}`);
+  }
 };
 
 const productRoutes = (app: express.Application) => {

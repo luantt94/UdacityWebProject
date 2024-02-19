@@ -2,7 +2,6 @@ import client from "../database";
 import bcrypt from "bcrypt";
 
 export type User = {
-  id: number;
   username: string;
   password: string;
   password_digest: string;
@@ -59,23 +58,27 @@ export class UserStore {
   }
 
   async authenticate(username: string, password: string): Promise<User | null> {
-    const pepper = process.env.BCRYPT_PASSWORD;
-    const saltRounds = process.env.BCRYPT_PASSWORD || "0";
-    const conn = await client.connect();
-    const sql = "SELECT password_digest FROM users WHERE username=($1)";
+    try {
+      const pepper = process.env.BCRYPT_PASSWORD;
+      const saltRounds = process.env.BCRYPT_PASSWORD || "0";
+      const conn = await client.connect();
+      const sql = "SELECT password_digest FROM users WHERE username=($1)";
 
-    const result = await conn.query(sql, [username]);
+      const result = await conn.query(sql, [username]);
 
-    console.log(password + pepper);
+      console.log(password + pepper);
 
-    if (result.rows.length) {
-      const user = result.rows[0];
+      if (result.rows.length) {
+        const user = result.rows[0];
 
-      console.log(user);
+        console.log(user);
 
-      if (bcrypt.compareSync(password + pepper, user.password_digest)) {
-        return user;
+        if (bcrypt.compareSync(password + pepper, user.password_digest)) {
+          return user;
+        }
       }
+    } catch (err) {
+      throw new Error(`Error: ${err}`);
     }
 
     return null;

@@ -10,8 +10,12 @@ const index = async (req: Request, res: Response) => {
 };
 
 const show = async (req: Request, res: Response) => {
-  const product_order = await store.show(req.params.id);
-  res.json(product_order);
+  try {
+    const product_order = await store.show(req.params.id);
+    res.json(product_order);
+  } catch (err) {
+    throw new Error(`Error: ${err}`);
+  }
 };
 
 const create = async (req: Request, res: Response) => {
@@ -31,8 +35,12 @@ const create = async (req: Request, res: Response) => {
 };
 
 const destroy = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.body.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.body.id);
+    res.json(deleted);
+  } catch (err) {
+    throw new Error(`Error: ${err}`);
+  }
 };
 
 const productOrderRoutes = (app: express.Application) => {

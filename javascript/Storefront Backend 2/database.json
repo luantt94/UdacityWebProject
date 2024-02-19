@@ -9,7 +9,7 @@
   "test": {
     "driver": "pg",
     "host": "localhost",
-    "database": "store_front_test",
+    "database": "store_front_test1",
     "user": "postgres",
     "password": "luantt94"
   }

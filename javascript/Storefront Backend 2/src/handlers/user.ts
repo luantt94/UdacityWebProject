@@ -1,24 +1,31 @@
 import express, { Request, Response } from "express";
 import { User, UserStore } from "../models/user";
 import jwt from "jsonwebtoken";
+import { verifyToken } from "../middleware/VerifyToken";
 
 const store = new UserStore();
 
 const index = async (_req: Request, res: Response) => {
-  const users = await store.index();
-  res.json(users);
+  try {
+    const users = await store.index();
+    res.json(users);
+  } catch (err) {
+    throw new Error(`Error: ${err}`);
+  }
 };
 
 const show = async (req: Request, res: Response) => {
-  const user = await store.show(req.params.id);
-  res.json(user);
+  try {
+    const user = await store.show(req.params.id);
+    res.json(user);
+  } catch (err) {
+    throw new Error(`Error: ${err}`);
+  }
 };
 
 const create = async (req: Request, res: Response) => {
-  console.log("create", req.body);
   try {
     const user: User = {
-      id: 0,
       username: <string>req.body.username || "",
       password: <string>req.body.password || "",
       email: <string>req.body.email || "",
@@ -37,15 +44,19 @@ const create = async (req: Request, res: Response) => {
 };
 
 const destroy = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.body.id);
-  res.json(deleted);
+  try {
+    const deleted = await store.delete(req.body.id);
+    res.json(deleted);
+  } catch (err) {
+    throw new Error(`Error: ${err}`);
+  }
 };
 
 const userRoutes = (app: express.Application) => {
-  app.get("/users", index);
-  app.get("/users/:id", show);
+  app.get("/users", verifyToken, index);
+  app.get("/users/:id", verifyToken, show);
   app.post("/users", create);
-  app.delete("/users/:id", destroy);
+  app.delete("/users/:id", verifyToken, destroy);
 };
 
 export default userRoutes;
