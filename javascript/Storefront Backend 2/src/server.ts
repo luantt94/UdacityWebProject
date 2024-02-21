@@ -29,3 +29,5 @@ productOrderRoutes(app);
 app.listen(3000, async function () {
   console.log(`starting app on: ${address}`);
 });
+
+export default app;

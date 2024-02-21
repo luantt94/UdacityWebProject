@@ -13,20 +13,44 @@ authorization = Bearer :token
 
 - Index (GET `/products` )
 - Show (GET `/products/:id`)
-- Create [token required] (POST `/products?name=&:price=&:quantity=`)
-  ex: http://localhost:3000/products?name=nokia&price=22&quantity=12
+- Create [token required] (POST `/products`)
+  data example:
+  {
+  "name":"nokia",
+  "price":"22",
+  "quantity":"12"
+  }
+- Delete [token required] (DELETE `/products/:id`)
+
+#### Product_orders
+
+- Index (GET `/product_orders` )
+- Show (GET `/product_orders/:id`)
+- Create [token required] (POST `/product_orders`)
+  data example: {"order_id":"1",
+  "product_id":"1",
+  "quantity":"1"}
+- Delete [token required] (DELETE `/product_orders/:id`)
 
 #### Users
 
 - Index [token required] (GET `/users`)
 - Show [token required] (GET `/users/:id`)
 - Create N[token required] (POST `/users`)
+  data example: {
+  "username":"luan",
+  "password":"password",
+  "email":"email"
+  }
+- Delete [token required] (DELETE `/users/:id`)
 
 #### Orders
 
 - Index [token required] (GET `/orders`)
 - Show [token required] (GET `/orders/:id`)
-- Create [token required] (POST `/orders?user_id=`)
+- Create [token required] (POST `/orders`)
+  data example: {"user_id":"2"}
+- Delete [token required] (DELETE `/orders/:id`)
 
 ## Data Shapes
 

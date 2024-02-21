@@ -15,7 +15,7 @@ const index = async (req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const product = await store.show(req.params.id);
+    const product = await store.show(Number(req.params.id));
     res.json(product);
   } catch (err) {
     throw new Error(`Error: ${err}`);
@@ -25,9 +25,10 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const product: Product = {
-      name: <string>req.query.name || "",
-      price: Number(<string>req.query.price || "0"),
-      quantity: Number(<string>req.query.quantity || ""),
+      id: 0,
+      name: <string>req.body.name || "",
+      price: Number(<string>req.body.price || "0"),
+      quantity: Number(<string>req.body.quantity || ""),
     };
 
     const newProduct = await store.create(product);
@@ -40,7 +41,7 @@ const create = async (req: Request, res: Response) => {
 
 const destroy = async (req: Request, res: Response) => {
   try {
-    const deleted = await store.delete(req.body.id);
+    const deleted = await store.delete(Number(req.params.id));
     res.json(deleted);
   } catch (err) {
     throw new Error(`Error: ${err}`);

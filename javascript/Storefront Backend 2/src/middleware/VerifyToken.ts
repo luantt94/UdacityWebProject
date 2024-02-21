@@ -1,5 +1,4 @@
 import express from "express";
-import fs from "fs";
 import { NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
@@ -16,7 +15,7 @@ export async function verifyToken(
     const secret = process.env.TOKEN_SECRET || "";
     console.log("token", token);
     console.log("secret", secret);
-    const decoded = jwt.verify(token, secret, (err, decoded) => {
+    jwt.verify(token, secret, (err) => {
       if (err) {
         console.log("Token verification failed:", err.message);
         res.send("Token verification failed:" + err.message.toString());

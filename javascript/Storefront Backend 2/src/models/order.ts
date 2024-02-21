@@ -1,6 +1,7 @@
 import client from "../database";
 
 export type Order = {
+  id: number;
   user_id: number;
   total_price: number;
   status: number; //0 is not finished; 1 is finished
@@ -19,7 +20,7 @@ export class OrderStore {
     }
   }
 
-  async show(id: string): Promise<Order> {
+  async show(id: number): Promise<Order> {
     try {
       const sql = "SELECT * FROM orders WHERE id=($1)";
       const conn = await client.connect();
@@ -56,18 +57,13 @@ export class OrderStore {
     }
   }
 
-  async delete(id: string): Promise<Order> {
+  async delete(id: number): Promise<number> {
     try {
       const sql = "DELETE FROM orders WHERE id=($1)";
       const conn = await client.connect();
-
       const result = await conn.query(sql, [id]);
-
-      const order = result.rows[0];
-
       conn.release();
-
-      return order;
+      return result.rowCount;
     } catch (err) {
       throw new Error(`Could not delete order ${id}. Error: ${err}`);
     }

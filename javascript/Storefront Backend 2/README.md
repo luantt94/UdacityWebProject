@@ -2,8 +2,10 @@
 
 ## Set up
 
+Create database name: store_front
 Run below commands:
 npm install
+db-migrate up
 
 ## Environmental Variables
 

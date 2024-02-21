@@ -15,7 +15,7 @@ const index = async (req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const order = await store.show(req.params.id);
+    const order = await store.show(Number(req.params.id));
     res.json(order);
   } catch (err) {
     throw new Error(`Error: ${err}`);
@@ -25,7 +25,8 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   try {
     const order: Order = {
-      user_id: Number(<string>req.query.user_id || "0"),
+      id: 0,
+      user_id: Number(<string>req.body.user_id || "0"),
       total_price: 0,
       status: 0,
     };
@@ -40,7 +41,7 @@ const create = async (req: Request, res: Response) => {
 
 const destroy = async (req: Request, res: Response) => {
   try {
-    const deleted = await store.delete(req.body.id);
+    const deleted = await store.delete(Number(req.params.id));
     res.json(deleted);
   } catch (err) {
     throw new Error(`Error: ${err}`);

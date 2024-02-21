@@ -2,6 +2,7 @@ import client from "../database";
 import bcrypt from "bcrypt";
 
 export type User = {
+  id: number;
   username: string;
   password: string;
   password_digest: string;
@@ -21,7 +22,7 @@ export class UserStore {
     }
   }
 
-  async show(id: string): Promise<User> {
+  async show(id: number): Promise<User> {
     try {
       const sql = "SELECT * FROM users WHERE id=($1)";
       const conn = await client.connect();
@@ -60,7 +61,7 @@ export class UserStore {
   async authenticate(username: string, password: string): Promise<User | null> {
     try {
       const pepper = process.env.BCRYPT_PASSWORD;
-      const saltRounds = process.env.BCRYPT_PASSWORD || "0";
+      // const saltRounds = process.env.BCRYPT_PASSWORD || "0";
       const conn = await client.connect();
       const sql = "SELECT password_digest FROM users WHERE username=($1)";
 
@@ -84,18 +85,13 @@ export class UserStore {
     return null;
   }
 
-  async delete(id: string): Promise<User> {
+  async delete(id: number): Promise<number> {
     try {
       const sql = "DELETE FROM users WHERE id=($1)";
       const conn = await client.connect();
-
       const result = await conn.query(sql, [id]);
-
-      const user = result.rows[0];
-
       conn.release();
-
-      return user;
+      return result.rowCount;
     } catch (err) {
       throw new Error(`Could not delete user ${id}. Error: ${err}`);
     }
