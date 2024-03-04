@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { Product } from '../../models/Product';
+import { ProductService } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
+import { ProductItemComponent } from '../product-item/product-item.component';
+
+@Component({
+  selector: 'app-product-list',
+  standalone: true,
+  imports: [ProductItemComponent],
+  templateUrl: './product-list.component.html',
+  styleUrl: './product-list.component.css',
+})
+export class ProductListComponent implements OnInit {
+  products: Product[];
+
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) {
+    this.products = [];
+  }
+  ngOnInit(): void {
+    this.productService.getProducts().subscribe((products: Product[]) => {
+      this.products = products as Product[];
+    });
+  }
+}
