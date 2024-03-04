@@ -3,11 +3,12 @@ import { Product } from '../../models/Product';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { ProductItemComponent } from '../product-item/product-item.component';
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [ProductItemComponent],
+  imports: [NgForOf, ProductItemComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
 })
