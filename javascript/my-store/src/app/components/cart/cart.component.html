@@ -1,1 +1,53 @@
-<p>cart works!</p>
+<div *ngIf="this.listCart.length != 0">
+  <div class="cart-container container">
+    <div class="cart-item-details col-sm">
+
+      <div class="cart-item " *ngFor=" let cart of listCart">
+        <img src="{{cart.url}}">
+        <div class="cart-panel">
+          <p>{{ cart.pName }}</p>
+          <p>${{ cart.price }}</p>
+          <p>Amount: <input class="number-input" min="1" name="quatityInCard" type="number" value="{{cart.quantity}}"
+              [(ngModel)]="cart.quantity"
+              (ngModelChange)="[changeAmount(cart.id, cart.quantity), refreshCart(), getTotalPrice()]">
+          </p>
+          <button class="btn" type="delete" name="delete"
+            (click)="[btnDeleteClick(cart.id),  refreshCart(), getTotalPrice()]">Delete</button>
+        </div>
+      </div>
+    </div>
+    <div class="cart-item col-sm">
+      <form #form="ngForm" class="form-margin" (ngSubmit)="submit()">
+        <div>
+          <p>Full Name</p>
+          <input type="text" name="fullName" ngModel required minlength="1" #fullName="ngModel" />
+          <br>
+          <span style="color: red" *ngIf="fullName.invalid && fullName.touched">Name is not valid</span>
+        </div>
+
+        <div>
+          <p>Address</p>
+          <input type="text" name="address" ngModel required minlength="1" #address="ngModel" />
+          <br>
+          <span style="color: red" *ngIf="address.invalid && address.touched">Address is not valid</span>
+        </div>
+
+        <div>
+          <p>Card Number</p>
+          <input type="text" name="cardNumber" ngModel required minlength="13" maxlength="16" #cardNumber="ngModel"
+            pattern="^[0-9]*$" />
+          <br>
+          <span style="color: red" *ngIf="cardNumber.invalid && cardNumber.touched">Card number is not valid</span>
+        </div>
+
+        <button [disabled]="form.invalid" class="btn">Submit</button>
+      </form>
+
+    </div>
+  </div>
+  <p style="text-align: center">Total: ${{ getTotalPrice() }}</p>
+</div>
+
+<p style="text-align: center; margin-top: 100px;" *ngIf="this.listCart.length == 0">
+  Cart is empty!
+</p>

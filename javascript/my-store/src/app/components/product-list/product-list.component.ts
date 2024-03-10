@@ -28,8 +28,7 @@ export class ProductListComponent implements OnInit {
   }
 
   addProductToCart(product: Product, quantity: number): void {
-    alert(`${quantity ? quantity : 1} of ${product.name} add to cart`);
+    alert(`${quantity} of ${product.name} add to cart`);
     this.cartService.addToCart(product, quantity);
-    alert(this.cartService.getListItem().length);
   }
 }
