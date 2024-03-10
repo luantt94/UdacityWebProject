@@ -1,18 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { Product } from '../../models/Product';
 import { RouterModule } from '@angular/router';
 import { NgFor } from '@angular/common';
-import { NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product-item',
   standalone: true,
-  imports: [RouterModule, NgFor, NgModel],
+  imports: [RouterModule, NgFor, FormsModule],
   templateUrl: './product-item.component.html',
   styleUrl: './product-item.component.css',
 })
 export class ProductItemComponent implements OnInit {
   @Input() product: Product;
+  @Output() addProductToCart = new EventEmitter();
   quantity: number;
   listQuantity: number[];
   ngOnInit(): void {}

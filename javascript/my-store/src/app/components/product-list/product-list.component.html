@@ -3,5 +3,6 @@
     class="product-item"
     *ngFor="let product of products"
     [product]="product"
+    (addProductToCart)="addProductToCart(product, $event)"
   ></app-product-item>
 </div>
